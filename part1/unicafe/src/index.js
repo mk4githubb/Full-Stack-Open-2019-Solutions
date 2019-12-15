@@ -21,15 +21,24 @@ const App = () => {
                 <div>
                     <h1>statistics</h1>
                 </div>
-                <div>
-                    <p>Good: {good}</p>
-                    <p>Neutral: {neutral}</p>
-                    <p>Bad: {bad}</p>
-                    <p>All: {good+bad+neutral}</p>
-                    <Average good={good} neutral={neutral} bad={bad}/>
-                    <Positive good={good} neutral={neutral} bad={bad}/>
-                </div>
+                <DislayFeedback good={good} bad={bad} neutral={neutral}/>
             </div>
+        </div>
+    )
+}
+
+const DislayFeedback = ({good, neutral, bad})=>{
+    if(good+neutral+bad <= 0){
+        return <p>No Feedback given</p>
+    }
+    return (
+        <div>
+            <p>Good: {good}</p>
+            <p>Neutral: {neutral}</p>
+            <p>Bad: {bad}</p>
+            <p>All: {good+bad+neutral}</p>
+            <Average good={good} neutral={neutral} bad={bad}/>
+            <Positive good={good} neutral={neutral} bad={bad}/>
         </div>
     )
 }
