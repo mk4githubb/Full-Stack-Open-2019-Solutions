@@ -2,48 +2,50 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const App = () => {
-    const course = 'Half Stack application development'
-    const parts = [
-        {
-            name: 'Fundamentals of React',
-            exercises: 10
-        },
-        {
-            name: 'Using props to pass data',
-            exercises: 7
-        },
-        {
-            name: 'State of a component',
-            exercises: 14
-        }
-    ]
+    const course = {
+        name: 'Half Stack application development',
+        parts: [
+            {
+                name: 'Fundamentals of React',
+                exercises: 10
+            },
+            {
+                name: 'Using props to pass data',
+                exercises: 7
+            },
+            {
+                name: 'State of a component',
+                exercises: 14
+            }
+        ]
+    }
 
     return (
         <div>
-            <Header course={course}/>
-            <Content parts = {parts} />
-            <Footer parts = {parts}/>
+            <Header course ={course}/>
+            <Content course = {course} />
+            <Footer course = {course}/>
         </div>
     )
 }
 
-const Header = ({course})=> <h1>{course}</h1>
+const Header = ({course})=> <h1>{course.name}</h1>
 
-const Content = ({parts}) => {
-    console.log(parts)
+const Content = ({course}) => {
+    console.log(course)
     return(
         <div>
-            <Part name ={parts[0].name} exercises={parts[0].exercises} />
-            <Part name ={parts[1].name} exercises={parts[1].exercises} />
-            <Part name ={parts[2].name} exercises={parts[2].exercises} />
+            <Part name ={course.parts[0].name} exercises={course.parts[0].exercises} />
+            <Part name ={course.parts[1].name} exercises={course.parts[1].exercises} />
+            <Part name ={course.parts[2].name} exercises={course.parts[2].exercises} />
         </div>
     )
 }
 
-const Footer = ({parts})=>{
+const Footer = ({course})=>{
     return(
         <div>
-            Number of exercises {parts[0].exercises+ parts[1].exercises+ parts[2].exercises}
+            Number of exercises {course.parts[0].exercises+ course.parts[1].exercises+ course.parts[2].exercises}
         </div>
     )
 }
