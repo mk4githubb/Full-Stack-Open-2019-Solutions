@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
+import Button from "./Button";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = (props) => {
+    const [selected, setSelected] = useState(0)
+
+    const handler = () => setSelected(RandomNumber(props.anecdotes.length))
+
+    return (
+        <div>
+            <p>{props.anecdotes[selected]} </p>
+            <Button text={'Show Random Anecdote'} handler= {handler} />
+        </div>
+    )
 }
 
-export default App;
+const RandomNumber = (b) =>{
+    return Math.floor(Math.random()* (b+1))
+}
+
+export default  App
