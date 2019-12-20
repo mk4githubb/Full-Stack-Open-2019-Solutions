@@ -17,12 +17,15 @@ const App = (props) => {
         setVotes(copy)
     }
 
+    const maxIndex = ()=> votes.indexOf(Math.max(...votes))
+
     return (
         <div>
             <p>{props.anecdotes[selected]} </p>
             <p>has {votes[selected]} votes </p>
             <Button text={"Vote"} handler={voteHandler}/>
             <Button text={'Show Random Anecdote'} handler= {randomAnecdote} />
+            <p>{props.anecdotes[maxIndex()]} </p>
         </div>
     )
 }
