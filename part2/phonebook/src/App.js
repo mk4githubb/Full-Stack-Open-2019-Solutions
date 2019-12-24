@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import Person from "./Person";
+import Search from "./Search";
 
 const App = () => {
     const [ persons, setPersons] = useState([
@@ -27,6 +29,8 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
+            <Search collection={persons}/>
+            <h2>Add a new</h2>
             <form onSubmit={submitHandler}>
                 <div>
                     Name: <input value={newName} onChange={textChangeHandler}  />
@@ -42,7 +46,5 @@ const App = () => {
         </div>
     )
 }
-
-const Person  = ({name,number})=> <p> {name} : {number}</p>
 
 export default App
