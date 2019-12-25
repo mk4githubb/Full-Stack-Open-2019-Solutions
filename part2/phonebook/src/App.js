@@ -1,13 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Person from "./Person";
 import Search from "./Search";
+import axios from "axios";
 
 const App = () => {
-    const [ persons, setPersons] = useState([
-        { name: 'Arto Hellas', number:'999999999' }
-    ])
+    const [ persons, setPersons] = useState([])
     const [ newName, setNewName ] = useState('')
     const [newNumber, setNewNumber] = useState('')
+
+    useEffect(() =>{
+        console.log('effect')
+        axios.get('http://localhost:3001/personso').then(response => {
+            setPersons(response.data);
+        })
+            .catch(error => window.alert(error))
+    },[])
 
     const textChangeHandler = (event)=>{
         event.preventDefault()
@@ -42,7 +49,7 @@ const App = () => {
                 </div>
             </form>
             <h2>Numbers</h2>
-            {persons.map((person) => <Person key = {person.name} name={person.name} number={person.number}/> )}
+            {persons.map((person) => <Person key = {person.id} name={person.name} number={person.number}/> )}
         </div>
     )
 }
