@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios'
-import TenFound from "./TenFound";
-import OneFound from "./OneFound";
+import DisplayLogic from "./DisplayLogic";
 
 const App = () => {
     const [searchFeild, setSearchFeild ] = useState("")
@@ -25,17 +24,6 @@ const App = () => {
         setFoundResults(results);
     }
 
-    const DisplayLogic = () =>{
-        if(foundResults.length === 1) {
-            return <OneFound country={foundResults[0]}/>
-        }
-        else if (foundResults.length <= 10){
-            return <TenFound found={foundResults}/>
-        }
-        else{
-            return <p>Too many matches, specify another filter</p>
-        }
-    }
 
     return(
         <div>
@@ -43,7 +31,7 @@ const App = () => {
                 <label>Find Countries: </label>
                 <input value={searchFeild} onChange={searchFieldHandler}/>
             </form>
-            <DisplayLogic/>
+            <DisplayLogic results={foundResults}/>
         </div>
     )
 }
