@@ -9,7 +9,7 @@ const Search = ({collection})=> {
         event.preventDefault();
         setInput(event.target.value)
 
-        if(event.target.value === ''){
+        if(event.target.value.trim()===''){
             setFound([]);
             return;
         }

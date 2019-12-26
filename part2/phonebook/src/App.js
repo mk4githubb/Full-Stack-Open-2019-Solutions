@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Person from "./Person";
 import Search from "./Search";
-import axios from "axios";
+import services from "./Services";
 
 const App = () => {
     const [ persons, setPersons] = useState([])
@@ -10,7 +10,7 @@ const App = () => {
 
     useEffect(() =>{
         console.log('effect')
-        axios.get('http://localhost:3001/personso').then(response => {
+        services.getAll().then(response => {
             setPersons(response.data);
         })
             .catch(error => window.alert(error))
@@ -28,7 +28,18 @@ const App = () => {
 
     const submitHandler = (event)=>{
         event.preventDefault()
-        persons.some((i)=>i.name===newName)?window.alert(`${newName} is already present in the phonebook`): setPersons(persons.concat({name:newName, number: newNumber}))
+        if(persons.some((i)=>i.name===newName)){
+            window.alert(`${newName} is already present in the phonebook`)
+            return;
+        }
+        else{
+            console.log(JSON.stringify({newName, newNumber}))
+            services.add({name: newName, number: newNumber})
+                .then(response => {
+                    console.log(response.data)
+                    setPersons(persons.concat(response.data))
+                })
+        }
         setNewName('')
         setNewNumber('')
     }
