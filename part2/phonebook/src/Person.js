@@ -1,5 +1,5 @@
 import React from "react";
 
-const Person  = ({name,number})=> <p> {name} : {number}</p>
+const Person  = ({name,number})=> <span> {name} : {number}</span>
 
 export default Person

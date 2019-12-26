@@ -16,13 +16,14 @@ const Search = ({collection})=> {
         setFound(collection.filter(i => i.name.toLowerCase().includes(event.target.value.toLowerCase())))
     }
 
+
     return (
         <div>
             <form>
                 filter shown with: <input value={input} onChange={inputTextChangeHandler}/>
             </form>
             <ul>
-            {found.map(i=> <li key={i.number}><Person name={i.name} number={i.number}/></li>)}
+            {found.map(i=> <li key={i.number}> <Person name={i.name} number={i.number}/> </li>)}
             </ul>
         </div>
     )

@@ -29,11 +29,20 @@ const App = () => {
     const submitHandler = (event)=>{
         event.preventDefault()
         if(persons.some((i)=>i.name===newName)){
-            window.alert(`${newName} is already present in the phonebook`)
-            return;
+            if(!window.confirm(`${newName} is already present in the phonebook, replace the old number with a new one?`)){
+                return;
+            }
+
+            let foundPerson  = persons.find(i => i.name === newName)
+            console.log(foundPerson.id, foundPerson)
+            services.update(foundPerson.id, {name: newName, number: newNumber})
+                .then(response => {
+                    console.log(response.data)
+                    let filtered = persons.filter( i => i.id !== foundPerson.id)
+                    setPersons(filtered.concat(response.data))
+                })
         }
         else{
-            console.log(JSON.stringify({newName, newNumber}))
             services.add({name: newName, number: newNumber})
                 .then(response => {
                     console.log(response.data)
@@ -42,6 +51,15 @@ const App = () => {
         }
         setNewName('')
         setNewNumber('')
+    }
+
+    const deleteHandler = (id) => {
+        if(!window.confirm(`would you like to delete ${persons.find(i => i.id === id).name}`)){
+            return;
+        }
+        services.delContact(id)
+            .then(() => setPersons(persons.filter(i => i.id !== id)))
+            .catch(()=> alert('Error has occoured!'))
     }
 
     return (
@@ -60,9 +78,12 @@ const App = () => {
                 </div>
             </form>
             <h2>Numbers</h2>
-            {persons.map((person) => <Person key = {person.id} name={person.name} number={person.number}/> )}
+            {persons.map((person) => <li key = {person.id} ><Person  name={person.name} number={person.number}/>
+                                                            <Button text={'Delete'} handler={() => deleteHandler(person.id)} /> </li>)}
         </div>
     )
 }
+
+const Button = ({text,handler})=> <button onClick={handler}>{text}</button>
 
 export default App
