@@ -26,11 +26,16 @@ const App = () => {
     }
 
     const DisplayLogic = () =>{
-        if(foundResults.length === 1) {
+        const [buttonSelected , setButtonSelected] = useState(undefined);
+
+        if (buttonSelected){
+            return <OneFound country={buttonSelected}/>
+        }
+        else if(foundResults.length === 1) {
             return <OneFound country={foundResults[0]}/>
         }
         else if (foundResults.length <= 10){
-            return <TenFound found={foundResults}/>
+            return <TenFound found={foundResults} handler={setButtonSelected} />
         }
         else{
             return <p>Too many matches, specify another filter</p>
