@@ -1,21 +1,14 @@
-import React, {useState} from "react";
-import Button from "./Button";
+import React from "react";
 
-const TenFound = ({found, buttonHandler}) => {
-
-    const [selected, setSelected] = useState(undefined)
-
-    const handler = () => {
-        console.log(selected)
-        buttonHandler(selected)
-    }
+const TenFound = ({found, handler}) => {
 
     return(
         <ul>
-            {found.map(country => <li key={country.callingCodes}>{country.name}
-             <Button text={'show info'} handler={handler} /> </li>)}
+            {found.map(country => <li key={country.name}>{country.name}
+                                <button onClick={() => handler(country)}>show Info</button>
+                                </li>)}
         </ul>
     )
-}
+};
 
 export default TenFound;
