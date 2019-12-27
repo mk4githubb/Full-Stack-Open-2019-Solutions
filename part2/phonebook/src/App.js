@@ -2,18 +2,22 @@ import React, { useState, useEffect } from 'react'
 import Person from "./Person";
 import Search from "./Search";
 import services from "./Services";
+import Notification from "./Notification";
 
 const App = () => {
     const [ persons, setPersons] = useState([])
     const [ newName, setNewName ] = useState('')
     const [newNumber, setNewNumber] = useState('')
+    const [notification, setNotification] = useState(null)
 
     useEffect(() =>{
-        console.log('effect')
         services.getAll().then(response => {
             setPersons(response.data);
         })
-            .catch(error => window.alert(error))
+            .catch(error => {
+                setNotification("Error happened while retrieving the Data");
+                setTimeout(() => setNotification(null));
+            } )
     },[])
 
     const textChangeHandler = (event)=>{
@@ -34,19 +38,25 @@ const App = () => {
             }
 
             let foundPerson  = persons.find(i => i.name === newName)
-            console.log(foundPerson.id, foundPerson)
             services.update(foundPerson.id, {name: newName, number: newNumber})
                 .then(response => {
-                    console.log(response.data)
                     let filtered = persons.filter( i => i.id !== foundPerson.id)
                     setPersons(filtered.concat(response.data))
+                    setNotification(`updated ${newName}`)
+                    setTimeout(()=> setNotification(null), 5000);
                 })
         }
         else{
             services.add({name: newName, number: newNumber})
                 .then(response => {
-                    console.log(response.data)
-                    setPersons(persons.concat(response.data))
+                    setPersons(persons.concat(response.data));
+                    setNotification(`added ${newName}`)
+                    setTimeout(()=> setNotification(null), 5000);
+                })
+                .catch(error => {
+                    setNotification(`Error!! Contact not saved. Please try again later!`)
+                    setTimeout(()=> setNotification(null), 10000);
+
                 })
         }
         setNewName('')
@@ -65,6 +75,7 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
+            <Notification text = {notification}/>
             <Search collection={persons}/>
             <h2>Add a new</h2>
             <form onSubmit={submitHandler}>
