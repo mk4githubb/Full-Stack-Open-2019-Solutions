@@ -18,6 +18,7 @@ const App = () => {
     },[])
 
     const searchFieldHandler = (event) =>{
+        console.log("In search Feild Handlker")
         event.preventDefault();
         setSearchFeild(event.target.value)
         const results = data.filter(country => {
@@ -27,6 +28,9 @@ const App = () => {
 
     const DisplayLogic = () =>{
         const [buttonSelected , setButtonSelected] = useState(undefined);
+
+        console.log("in Display logic");
+        console.log("buttonSelected: ", buttonSelected);
 
         if (buttonSelected){
             return <OneFound country={buttonSelected}/>
