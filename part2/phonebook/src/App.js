@@ -45,6 +45,10 @@ const App = () => {
                     setNotification(`updated ${newName}`)
                     setTimeout(()=> setNotification(null), 5000);
                 })
+                .catch(() => {
+                    setNotification("Note has already been removed")
+                    setTimeout(() => setNotification(null),5000)
+                });
         }
         else{
             services.add({name: newName, number: newNumber})
@@ -69,7 +73,10 @@ const App = () => {
         }
         services.delContact(id)
             .then(() => setPersons(persons.filter(i => i.id !== id)))
-            .catch(()=> alert('Error has occoured!'))
+            .catch(error => {
+                setNotification("Note has already been removed");
+                setTimeout(() => setNotification(null),5000)
+            })
     }
 
     return (
