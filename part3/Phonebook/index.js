@@ -18,5 +18,10 @@ app.get("/api/persons", (request, response ) =>{
     response.json(persons);
 });
 
+app.get("/info", (request, response) => {
+    let toShow  = `<p> Phonebook has info for ${persons.length} people. </p>`+ `<p> ${new Date()}</p>`;
+    response.send(toShow)
+})
+
 app.listen(3001)
 console.log('listening on 3001');
