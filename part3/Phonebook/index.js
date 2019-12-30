@@ -3,10 +3,26 @@ const app = express();
 
 
 const persons = [
-        { name: 'Arto Hellas', number: '040-123456' },
-        { name: 'Ada Lovelace', number: '39-44-5323523' },
-        { name: 'Dan Abramov', number: '12-43-234345' },
-        { name: 'Mary Poppendieck', number: '39-23-6423122' }
+    {
+        "name": "Dan Abramov",
+        "number": "12-43-234345",
+        "id": 1
+    },
+    {
+        "name": "Mary Poppendieck",
+        "number": "39-23-6423122",
+        "id": 2
+    },
+    {
+        "name": "Mom",
+        "number": "123",
+        "id": 3
+    },
+    {
+        "name": "mk",
+        "number": "mk",
+        "id": 4
+    }
 ]
 
 app.get("/", (request, response) =>{
@@ -16,6 +32,19 @@ app.get("/", (request, response) =>{
 
 app.get("/api/persons", (request, response ) =>{
     response.json(persons);
+});
+
+app.get("/api/persons/:id", (request, response)=> {
+    let id = request.params.id;
+    let found = persons.find(person => person.id === Number(id));
+
+    console.log(found)
+    if(found){
+        response.json(found)
+    }
+    else{
+        response.status(404).end();
+    }
 });
 
 app.get("/info", (request, response) => {
