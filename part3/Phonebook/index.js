@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-
 app.use(bodyParser.json());
+const morgan = require('morgan');
+app.use(morgan('tiny'));
 
 let persons = [
     {
@@ -92,13 +93,12 @@ app.delete("/api/persons/:id", (request, response)=>{
     else {
         return response.status(404).end();
     }
-
 });
 
 app.get("/info", (request, response) => {
     let toShow  = `<p> Phonebook has info for ${persons.length} people. </p>`+ `<p> ${new Date()}</p>`;
     return response.send(toShow)
-})
+});
 
 const PORT = 3001;
 app.listen(PORT);
