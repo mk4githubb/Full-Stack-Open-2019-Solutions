@@ -1,12 +1,8 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 
-if ( process.argv.length !== 5 ){
-    console.log('Please enter the password: ');
-    process.exit(0);
-}
-
-const password = process.argv[2];
-const URL = `mongodb+srv://back_slash:${password}@cluster0-nqsyg.mongodb.net/phonebook?retryWrites=true`;
+const URL = process.env.MONGODB_URI;
+console.log(typeof URL);
 
 mongoose.connect(URL, {useNewUrlParser : true});
 
@@ -15,21 +11,11 @@ const schema = new mongoose.Schema({
     number: String
 });
 
-const Row = mongoose.model('Row', schema);
-
-const newRow = new Row({
-    name: process.argv[3],
-    number: process.argv[4]
+schema.set('toJSON', {
+    transform:(document , returnedObject) =>{
+        returnedObject.id = returnedObject._id.toString();
+        delete returnedObject._id;
+        delete returnedObject.__v;
+    }
 });
-
-newRow.save()
-    .then(() => console.log('Data saved'))
-    .catch(() => console.log('Error in saving data'))
-    .catch(error => console.log(error));
-
-
- const y = Row.find({})
-     .then(result => {
-         result.forEach( i => console.log(i.name) );
-        mongoose.connection.close();
-     });
+module.exports = mongoose.model('Row', schema);

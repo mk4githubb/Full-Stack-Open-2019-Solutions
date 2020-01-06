@@ -65,9 +65,10 @@ const App = () => {
         }
         setNewName('')
         setNewNumber('')
-    }
+    };
 
     const deleteHandler = (id) => {
+        console.log(id);
         if(!window.confirm(`would you like to delete ${persons.find(i => i.id === id).name}`)){
             return;
         }
@@ -77,7 +78,7 @@ const App = () => {
                 setNotification("Note has already been removed");
                 setTimeout(() => setNotification(null),2000)
             })
-    }
+    };
 
     return (
         <div>
@@ -96,11 +97,12 @@ const App = () => {
                 </div>
             </form>
             <h2>Numbers</h2>
+            {console.log(persons)}
             {persons.map((person) => <li key = {person.id} ><Person  name={person.name} number={person.number}/>
                                                             <Button text={'Delete'} handler={() => deleteHandler(person.id)} /> </li>)}
         </div>
     )
-}
+};
 
 const Button = ({text,handler})=> <button onClick={handler}>{text}</button>
 
