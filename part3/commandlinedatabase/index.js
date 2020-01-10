@@ -1,11 +1,15 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-app.use(express.static('build'));
+// app.use(express.static('build'));
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-const Row = require('./database')
+const Row = require('./database');
+
+const cors = require('cors');
+app.use(cors());
+
 const morgan = require('morgan');
 
 morgan.token('data', function(request){
@@ -64,20 +68,19 @@ app.post("/api/persons/", (request, response)=>{
         .catch(() => console.log('Error in saving contact'));
 });
 
-app.delete("/api/persons/:id", (request, response)=>{
+app.delete("/api/persons/:id", (request, response) => {
 
-    const data = request.params;
+    console.log('Request.param is ', request.params);
+    const data = request.params.id;
 
-    var found = Row.find({id : data.id});
-
-    if(found){
-        persons = persons.filter(person => person.id !== id);
-        console.log(persons)
-        return response.status(200).end();
-    }
-    else {
-        return response.status(404).end();
-    }
+    Row.findById(data)
+        .then(() => Row.findByIdAndRemove(data)
+            .then(() => response.status(200).end())
+            .then(() => console.log('Contact Deleted'))
+            .catch(() => response.status(500).end())
+            .catch(() => console.log('Error in deleting contact')))
+        .catch(() => response.status(404).end())
+        .catch(() => console.log('No such entry found'));
 });
 
 app.get("/info", (request, response) => {

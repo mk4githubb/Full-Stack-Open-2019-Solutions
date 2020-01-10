@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const url = '/api/persons';
+const url = 'http://localhost:3001/api/persons';
 
 const getAll = () => axios.get(url);
 
-const add = (newPerson) =>axios.post(url, newPerson);
+const add = (newPerson) => axios.post(url, newPerson);
 
 const delContact = (id) => axios.delete(`${url}/${id}`);
 
