@@ -11,6 +11,7 @@ const App = () => {
     const [notification, setNotification] = useState(null)
 
     useEffect(() =>{
+        document.title='Phonebook App';
         services.getAll().then(response => {
             setPersons(response.data);
         })
@@ -59,7 +60,7 @@ const App = () => {
                 })
                 .catch(error => {
                     setNotification(`Error!! Contact not saved. Please try again later!`)
-                    setTimeout(()=> setNotification(null), 10000);
+                    setTimeout(()=> setNotification(null), 2000);
 
                 })
         }
@@ -73,35 +74,41 @@ const App = () => {
         }
         services.delContact(id)
             .then(() => setPersons(persons.filter(i => i.id !== id)))
+            .then(() => {
+                setNotification('Contact deleted');
+                setTimeout(() => setNotification(null), 2000)
+
+            })
             .catch(error => {
                 setNotification("Note has already been removed");
                 setTimeout(() => setNotification(null),2000)
             })
-    }
+    };
 
     return (
-        <div>
-            <h2>Phonebook</h2>
+        <div className={'main'}>
+            <h2 className={'mainHeading'}>Phonebook</h2>
             <Notification text = {notification}/>
             <Search collection={persons}/>
-            <h2>Add a new</h2>
-            <form onSubmit={submitHandler}>
-                <div>
-                    Name: <input value={newName} onChange={textChangeHandler}  />
-                    <br/>
-                    Number: <input value={newNumber} onChange={numberChangeHandler}  />
+            <h2 className={'heading'}>Add New Contact</h2>
+            <form className={'newContactForm'} onSubmit={submitHandler}>
+                <div id={'equalPartitionDiv'}>
+                        <label className={'nameLabel middleText'}> Name: </label> <input id = 'nameInput' required value={newName} onChange={textChangeHandler} placeholder={'Name'}/>
+                        <label className={'numberLabel middleText'}> Number/Email: </label> <input id = 'numberInput' required value={newNumber} onChange={numberChangeHandler} placeholder={'Number/Email'}/>
                 </div>
-                <div>
-                    <button type="submit" >add</button>
+                <div id={'submitButtonDiv'}>
+                    <button id={'submitButton'}  type="submit">Save Contact</button>
                 </div>
             </form>
-            <h2>Numbers</h2>
-            {persons.map((person) => <li key = {person.id} ><Person  name={person.name} number={person.number}/>
-                                                            <Button text={'Delete'} handler={() => deleteHandler(person.id)} /> </li>)}
+            <h2 className={'heading'}>Saved Contacts</h2>
+            <div className={'contacts'}>
+                {persons.map((person) => <li id={'singleContact'} key = {person.id} > <Person  name={person.name} number={person.number}/>
+                 <Button text={'Delete'} handler={() => deleteHandler(person.id)} /> </li>)}
+            </div>
         </div>
     )
-}
+};
 
-const Button = ({text,handler})=> <button onClick={handler}>{text}</button>
+const Button = ({text,handler})=> <button id={'deleteButton'} onClick={handler}>{text}</button>
 
 export default App

@@ -16,6 +16,6 @@ Schema.set('toJSON', {
     delete toReturn.__v
 }
 
-})
+});
 
 module.exports = mongoose.model('Row', Schema);

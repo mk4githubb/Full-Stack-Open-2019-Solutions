@@ -1,21 +1,155 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
-h1{
-    color: orange;
-    font-style: oblique;
-    font-family: Inconsolata;
+body{
+    background-color: #fffae5;
+    font-family: 'Montserrat', Monospaced, serif;
+    font-size: 17px;
 }
 
-h2 {
-    color: blueviolet;
-    font-style: italic;
+.main {
+    display: grid;
+    background-color: #fffae5;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(8, auto);
+    grid-auto-rows: 30px;
+    width: 100%;
+    height: 100%;
+    grid-gap: 10px;
 }
+
+.mainHeading{
+    font-weight: bolder;
+    font-size: xx-large;
+    grid-column: 1/-1;
+}
+
+.heading{
+    grid-column: 1/-1;
+    font-size: x-large;
+}
+
+/*
+ *   Search bar css
+ */
+.search{
+    grid-column: 1/-1;
+    padding: 0 300px 0 0;
+}
+
+#searchForm{
+    display: flex;
+    justify-content: space-around;
+}
+
+.labelFilter{
+    width: 40%;
+}
+
+#inputBox{
+    width: 40%;
+}
+
+/*
+ *  Form css
+ */
+
+.newContactForm{
+    grid-column: 1/-1;
+}
+
+#equalPartitionDiv{
+    grid-column: 1/-1;
+    display: flex;
+    justify-content: center;
+}
+
+.nameLabel{
+    width: 10%;
+}
+
+#nameInput{
+    width: 30%;
+}
+
+.numberLabel{
+    width: 15%;
+    margin-left: 10px;
+
+}
+
+#numberInput{
+    width: 30%;
+}
+
+/*
+ * Button css
+ */
+
+#submitButtonDiv{
+    display: flex;
+    justify-content: center;
+}
+
+#submitButton{
+    width: 10%;
+    justify-content: center
+}
+
+#submitButton{
+    width: 25%;
+    height: 25px;
+    margin-top: 30px;
+    font-size: 17px;
+    background-color: lightslategrey;
+    border-radius: 7px;
+}
+
+.middleText{
+    text-align: center;
+}
+
+/*
+ * Saved Contacts CSS
+ */
+
+.contacts{
+    grid-column: 1/-1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 7px;
+
+}
+
+#singleContact{
+    width: 100% ;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    margin: 10px 0 0 100px;
+}
+
+#person{
+    width: 20%;
+}
+
+#deleteButton{
+    width: 10%;
+    background-color: lightslategrey;
+    border-radius: 7px;
+    margin-left: 0;
+    font-size: 17px;
+}
+
+/*
+ * Notification CSS
+ */
 
 .notification{
-    color: red;
-    background: lightgrey;
-    font-size: 20px;
-    border-style: solid;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
+    grid-column: 4/8;
+    height: 30px;
+    background-color: cornflowerblue;
+    animation: 3s slidein;
+    border-radius: 7px;
+    text-align: center;
+    vertical-align: middle;
 }

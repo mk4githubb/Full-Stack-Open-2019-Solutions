@@ -6,6 +6,6 @@ const Notification = ({text})=> {
         return null;
     }
     return <div className= 'notification'>{text}</div>
-}
+};
 
 export default Notification;
