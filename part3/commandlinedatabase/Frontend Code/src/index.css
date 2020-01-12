@@ -9,7 +9,7 @@ body{
 .main {
     display: grid;
     background-color: #fffae5;
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
     grid-template-rows: repeat(8, auto);
     grid-auto-rows: 30px;
     width: 100%;
@@ -33,20 +33,22 @@ body{
  */
 .search{
     grid-column: 1/-1;
-    padding: 0 300px 0 0;
+    /*margin: 0 10% 0 0;*/
+    width: 80%;
 }
 
 #searchForm{
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .labelFilter{
-    width: 40%;
+    flex: 1 1 175px;
 }
 
 #inputBox{
-    width: 40%;
+    flex: 1 1 175px;
 }
 
 /*
@@ -61,24 +63,33 @@ body{
     grid-column: 1/-1;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 30px 0 0;
 }
 
+.line1{
+    flex: 1 1 auto;
+    display: flex;
+}
+
+.line2{
+    flex: 1 1 auto;
+    display: flex;
+}
 .nameLabel{
-    width: 10%;
+   flex: 0 1 200px;
 }
 
 #nameInput{
-    width: 30%;
+    flex: 1 1 auto;
 }
 
 .numberLabel{
-    width: 15%;
-    margin-left: 10px;
-
+    flex: 0 1 200px;
 }
 
 #numberInput{
-    width: 30%;
+    flex: 1 1 auto;
 }
 
 /*
@@ -91,11 +102,7 @@ body{
 }
 
 #submitButton{
-    width: 10%;
-    justify-content: center
-}
-
-#submitButton{
+    flex:  0 1 125px;
     width: 25%;
     height: 25px;
     margin-top: 30px;
@@ -111,33 +118,34 @@ body{
 /*
  * Saved Contacts CSS
  */
-
 .contacts{
     grid-column: 1/-1;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     margin-top: 7px;
-
 }
 
 #singleContact{
-    width: 100% ;
+    width: 80% ;
+    flex: 1 1 auto;
     display: flex;
     flex-direction: row;
     justify-content: right;
-    margin: 10px 0 0 100px;
+    margin: 10px 0 0 10%;
 }
 
 #person{
-    width: 20%;
+    flex: 0 1 500px;
 }
 
 #deleteButton{
-    width: 10%;
+    flex: 0 1 150px;
     background-color: lightslategrey;
     border-radius: 7px;
     margin-left: 0;
     font-size: 17px;
+    justify-content: space-between;
 }
 
 /*
@@ -145,11 +153,22 @@ body{
  */
 
 .notification{
-    grid-column: 4/8;
+    grid-column: 1/-1;
     height: 30px;
     background-color: cornflowerblue;
     animation: 3s slidein;
     border-radius: 7px;
     text-align: center;
-    vertical-align: middle;
+    vertical-align: center;
 }
+
+@media (max-width: 600px) {
+    .search{
+        padding: 0 3px 0 3px;
+    }
+
+    #singleContact{
+        margin: 10px 0 0 10%;
+    }
+}
+
