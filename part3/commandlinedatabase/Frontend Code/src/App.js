@@ -93,13 +93,8 @@ const App = () => {
             <h2 className={'heading'}>Add New Contact</h2>
             <form className={'newContactForm'} onSubmit={submitHandler}>
                 <div id={'equalPartitionDiv'}>
-                    <div className={'line1'}>
                         <label className={'nameLabel middleText'}> Name: </label> <input id = 'nameInput' required value={newName} onChange={textChangeHandler} placeholder={'Name'}/>
-                    </div>
-
-                    <div className={'line2'}>
-                        <label className={'numberLabel middleText'}> Contact: </label> <input id = 'numberInput' required value={newNumber} onChange={numberChangeHandler} placeholder={'Number/Email'}/>
-                    </div>
+                        <label className={'numberLabel middleText'}> Number/Email: </label> <input id = 'numberInput' required value={newNumber} onChange={numberChangeHandler} placeholder={'Number/Email'}/>
                 </div>
                 <div id={'submitButtonDiv'}>
                     <button id={'submitButton'}  type="submit">Save Contact</button>
