@@ -26,6 +26,11 @@ const errorHandler = (error, request, response, next) =>{
             'error': 'Error Connecting to Database'
         })
     }
+    else if( error.name ==='ValidationError'){
+        response.status(400).send({
+            'error':'validation error'
+        })
+    }
 
     next(error);
 };

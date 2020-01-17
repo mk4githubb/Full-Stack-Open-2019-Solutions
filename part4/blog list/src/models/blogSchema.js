@@ -1,11 +1,19 @@
 
 const mongoose = require('mongoose');
 
-const blogSchema = mongoose.Schema({
-    title: String,
-    author: String,
+const blogSchema = new mongoose.Schema({
+    title: {
+        type:String,
+        maxlength: 50,
+        required: true
+    },
     url: String,
-    likes: Number
+    likes: Number,
+    author: {
+        type: mongoose.Schema.Types.ObjectID,
+        ref: 'UserTable',
+        required: true
+    }
 });
 
 blogSchema.set('toJSON', {
@@ -16,4 +24,4 @@ blogSchema.set('toJSON', {
     }
 });
 
-module.exports = mongoose.model('Blog', blogSchema);
+module.exports = mongoose.model('BlogPostTable', blogSchema);
