@@ -1,0 +1,11 @@
+
+POST http://localhost:3000/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5pdmVhIiwiaWQiOiI1ZTIyODI4YjA4YzU3ZTgzYjY3YWFlZDUiLCJpYXQiOjE1NzkzMTk5NjF9.LU-Yko3go_b_UTZ55vivtGKZBndmWyQ4MsvhlG7CQFo
+
+{
+  "title": "Nivea Blog threeeeeeeeee",
+  "likes": 33
+}
+
+###
