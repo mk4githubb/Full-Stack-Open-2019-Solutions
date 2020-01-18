@@ -7,9 +7,8 @@ const config = require('../utils/config');
 
 blogRouter.get('/', async (request, response) => {
 
-    const foundEntires = await blogEntries.find({}).populate('author');
+    const foundEntires = await blogEntries.find({}).populate('author', {'blogPosts':0});
     response.send(foundEntires.map(blog => blog.toJSON()));
-
 });
 
 blogRouter.post('/', async (request, response, next) => {
@@ -36,6 +35,7 @@ blogRouter.post('/', async (request, response, next) => {
         foundUser.blogPosts = foundUser.blogPosts.concat(newBlog);
         await foundUser.save();
         response.status(200).json(newBlog.toJSON());
+        next();
     }
     catch (exception) {
         next(exception);
@@ -44,5 +44,29 @@ blogRouter.post('/', async (request, response, next) => {
 
 });
 
-module.exports = blogRouter;
+blogRouter.delete('/:id', async (request, response, next) =>{
+   const id = request.params.id;
+   const token = request.token;
 
+   try{
+       const decodedToken = jwt.verify(token, config.SECRET);
+
+       if(!token || !decodedToken.id){
+           next(new Error('TokenError'))
+       }
+
+       const foundUser = await userTable.findOne({username: decodedToken.username});
+
+       foundUser.blogPosts = foundUser.blogPosts.filter(i => i._id !== id);
+       await foundUser.save();
+       await blogTable.findByIdAndDelete(id);
+       // await blogTable.save();
+       response.status(200).end();
+   }
+   catch (exception) {
+       next(exception);
+   }
+
+});
+
+module.exports = blogRouter;
