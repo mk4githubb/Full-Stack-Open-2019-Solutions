@@ -1,11 +1,10 @@
 const router = require('express').Router();
 const userTable = require('../models/usersSchema');
 const bcrypt = require('bcrypt');
-ç
 
 router.get('/', async (request , response , next) => {
 
-    const foundResult = await userTable.find({});
+    const foundResult = await userTable.find({}).populate('blogPosts');
     response.status(200).json(foundResult.map(user => user.toJSON()));
 
 });
