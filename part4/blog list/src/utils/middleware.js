@@ -15,7 +15,22 @@ const unknownEndpoint= (request, response, next) =>{
 
 const errorHandler = (error, request, response, next) =>{
 
-    if (error.name === 'CastError' && error.kind === 'ObjectId'){
+    if (error.name === 'AuthenticationError'){
+        response.status(401).send({
+            'error': 'invalid username or password'
+        })
+    }
+    else if (error.name === 'TokenError'){
+        response.status(401).send({
+            'error': 'token missing or invalid'
+        })
+    }
+    else if (error.name === 'JsonWebTokenError'){
+        response.status(401).send({
+            'error': 'token missing or invalid'
+        })
+    }
+    else if (error.name === 'CastError' && error.kind === 'ObjectId'){
         response.status(400).send({
             'error': 'malformatted Id'
             }

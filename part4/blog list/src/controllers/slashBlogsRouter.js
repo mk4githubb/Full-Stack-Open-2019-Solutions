@@ -2,6 +2,8 @@ const blogRouter = require('express').Router();
 const blogEntries = require('../models/blogSchema');
 const userTable = require('../models/usersSchema');
 const blogTable = require('../models/blogSchema');
+const jwt = require('jsonwebtoken');
+const config = require('../utils/config');
 
 blogRouter.get('/', async (request, response) => {
 
@@ -10,34 +12,41 @@ blogRouter.get('/', async (request, response) => {
 
 });
 
+const getTokenFromRequest = request =>{
+    const authorization = request.get('authorization');
+
+    if(authorization && authorization.toLowerCase().startsWith('bearer')){
+        return authorization.substring(7);
+    }
+    return null;
+}
+
 blogRouter.post('/', async (request, response, next) => {
 
-    try {
-        const username = request.body.author;
-        console.log('fubdubfg user')
+    const token = getTokenFromRequest(request);
 
-        const foundUser = await userTable.findById(username);
-        console.log('user found')
+    try {
+        const decodedToken = jwt.verify(token , config.SECRET);
+
+        if(!token || !decodedToken.id){
+            next(new Error('TokenError'));
+        }
+
+        const foundUser = await userTable.findById(decodedToken.id);
 
         const newBlog = new blogTable({
             title: request.body.title,
             url: request.body.url,
             author: foundUser._id
         });
-        console.log('runnung blog.save')
 
         await newBlog.save();
-        console.log('blogh saved')
 
         foundUser.blogPosts = foundUser.blogPosts.concat(newBlog);
-        console.log('running user.save')
         await foundUser.save();
-        console.log('ran useer.save')
         response.status(200).json(newBlog.toJSON());
     }
     catch (exception) {
-        console.log('errpr')
-
         next(exception);
     }
 

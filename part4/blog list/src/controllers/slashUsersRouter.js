@@ -10,7 +10,6 @@ router.get('/', async (request , response , next) => {
 });
 
 router.post('/', async (request , response , next) => {
-
     try{
         const data = request.body;
         const passwordHash = await bcrypt.hash(data.password, 10);
