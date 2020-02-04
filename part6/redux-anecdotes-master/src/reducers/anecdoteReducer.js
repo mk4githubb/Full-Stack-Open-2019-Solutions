@@ -17,17 +17,31 @@ const asObject = (anecdote) => {
     }
 };
 
+
+const newAnecdoteHandler = (body) => {
+    return {
+        content: body,
+        id: getId(),
+        votes: 0
+    }
+};
+
 const initialState = anecdotesAtStart.map(asObject);
 
 const reducer = (state = initialState, action) => {
 
-    switch (action.type.toLowerCase()) {
+    switch (action.type) {
         case 'vote':
             const found = state.find(i => i.id === action.id);
             found.votes = found.votes + 1;
-            return [...state]
+            return [...state];
+
+        case 'addAnecdote':
+            return [...state, newAnecdoteHandler(action.body)];
+
+        default:
+            return state
     }
-    return state
 };
 
 export default reducer
