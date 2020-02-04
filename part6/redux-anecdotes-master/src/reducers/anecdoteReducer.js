@@ -29,15 +29,16 @@ const newAnecdoteHandler = (body) => {
 const initialState = anecdotesAtStart.map(asObject);
 
 const reducer = (state = initialState, action) => {
-
     switch (action.type) {
         case 'vote':
             const found = state.find(i => i.id === action.id);
             found.votes = found.votes + 1;
+            state.sort((a,b)=>b.votes - a.votes);
             return [...state];
 
         case 'addAnecdote':
-            return [...state, newAnecdoteHandler(action.body)];
+            const newState = [...state, newAnecdoteHandler(action.body)];
+            return newState.sort((a,b)=> b.votes-a.votes);;
 
         default:
             return state
