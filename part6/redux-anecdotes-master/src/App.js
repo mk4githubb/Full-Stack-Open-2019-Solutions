@@ -1,14 +1,12 @@
 import React from 'react';
+import {actionCreatorNewNote, actionCreatorUpVote} from "./reducers/anecdoteReducer";
 
 const App = (props) => {
     const store = props.store;
     const anecdotes = store.getState();
 
     const vote = (id) => {
-        store.dispatch({
-            type: 'vote',
-            id: id
-        })
+        store.dispatch(actionCreatorUpVote(id));
     };
 
     const addAnecdoteHandler = (event) => {
@@ -18,10 +16,7 @@ const App = (props) => {
             return;
         }
 
-        store.dispatch({
-            type: 'addAnecdote',
-            body: event.target.anecdoteBody.value
-        });
+        store.dispatch(actionCreatorNewNote(event.target.anecdoteBody.value));
 
         event.target.anecdoteBody.value = '';
     };

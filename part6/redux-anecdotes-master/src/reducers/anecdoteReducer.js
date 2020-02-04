@@ -26,6 +26,21 @@ const newAnecdoteHandler = (body) => {
     }
 };
 
+export const actionCreatorUpVote = (id) => {
+    return {
+        type: 'vote',
+        id: id
+    }
+};
+
+
+export const actionCreatorNewNote = (data) => {
+    return {
+        type: 'addAnecdote',
+        body: data
+    }
+};
+
 const initialState = anecdotesAtStart.map(asObject);
 
 const reducer = (state = initialState, action) => {
@@ -33,12 +48,13 @@ const reducer = (state = initialState, action) => {
         case 'vote':
             const found = state.find(i => i.id === action.id);
             found.votes = found.votes + 1;
-            state.sort((a,b)=>b.votes - a.votes);
+            state.sort((a, b) => b.votes - a.votes);
             return [...state];
 
         case 'addAnecdote':
             const newState = [...state, newAnecdoteHandler(action.body)];
-            return newState.sort((a,b)=> b.votes-a.votes);;
+            return newState.sort((a, b) => b.votes - a.votes);
+
 
         default:
             return state
