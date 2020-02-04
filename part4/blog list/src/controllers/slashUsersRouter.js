@@ -9,6 +9,12 @@ router.get('/', async (request , response , next) => {
 
 });
 
+router.get('/:id', async (request , response , next) => {
+    const id = request.params.id
+    const foundResult = await userTable.findById(id).populate('blogPosts');
+    response.status(200).json(foundResult => foundResult.toJSON());
+});
+
 router.post('/', async (request , response , next) => {
     try{
         const data = request.body;

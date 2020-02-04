@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const userTable = require('../models/usersSchema');
 const config = require('../utils/config');
 
-
 loginRouter.post('/', async (request , response , next) =>{
 
     const loginData = request.body;

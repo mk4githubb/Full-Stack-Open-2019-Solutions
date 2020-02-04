@@ -7,8 +7,12 @@ const blogSchema = new mongoose.Schema({
         maxlength: 50,
         required: true
     },
-    url: String,
-    likes: Number,
+    text:{
+     type:String,
+     maxlength: 256,
+     required: true
+    },
+    likes: 0,
     author: {
         type: mongoose.Schema.Types.ObjectID,
         ref: 'UserTable',

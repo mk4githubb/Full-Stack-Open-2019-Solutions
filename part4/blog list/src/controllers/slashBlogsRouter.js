@@ -8,7 +8,8 @@ const config = require('../utils/config');
 blogRouter.get('/', async (request, response) => {
 
     const foundEntires = await blogEntries.find({}).populate('author', {'blogPosts':0});
-    response.send(foundEntires.map(blog => blog.toJSON()));
+    const x = foundEntires.map(blog => blog.toJSON());
+    response.status(200).send(x);
 });
 
 blogRouter.post('/', async (request, response, next) => {
@@ -26,7 +27,8 @@ blogRouter.post('/', async (request, response, next) => {
 
         const newBlog = new blogTable({
             title: request.body.title,
-            url: request.body.url,
+            text: request.body.text,
+            likes: 0,
             author: foundUser._id
         });
 
@@ -66,7 +68,22 @@ blogRouter.delete('/:id', async (request, response, next) =>{
    catch (exception) {
        next(exception);
    }
-
 });
+
+blogRouter.put('/:id', async (request, response, next) =>{
+    const id = request.params.id;
+
+    try{
+        const updatedBlog = await blogTable.findByIdAndUpdate(id, {$inc:{likes:1}},{new:true});
+        response.status(200).send(updatedBlog.toJSON());
+    }
+    catch (exception) {
+        next(exception);
+    }
+});
+
+
+
+
 
 module.exports = blogRouter;
