@@ -17,7 +17,6 @@ const asObject = (anecdote) => {
     }
 };
 
-
 const newAnecdoteHandler = (body) => {
     return {
         content: body,
