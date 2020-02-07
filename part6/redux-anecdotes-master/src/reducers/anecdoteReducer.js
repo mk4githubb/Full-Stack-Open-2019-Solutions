@@ -54,7 +54,6 @@ const reducer = (state = initialState, action) => {
             const newState = [...state, newAnecdoteHandler(action.body)];
             return newState.sort((a, b) => b.votes - a.votes);
 
-
         default:
             return state
     }
