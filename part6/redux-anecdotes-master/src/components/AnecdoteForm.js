@@ -1,8 +1,9 @@
 import React from 'react'
 import {actionCreatorNewNote} from "../reducers/anecdoteReducer";
 import {notificationCreator} from "../reducers/notificationsReducer";
+import {connect} from 'react-redux'
 
-const NewAnecdoteForm = ({store}) => {
+const NewAnecdoteForm = (props) => {
 
     const addAnecdoteHandler = (event) => {
         event.preventDefault();
@@ -11,9 +12,9 @@ const NewAnecdoteForm = ({store}) => {
             return;
         }
 
-        store.dispatch(actionCreatorNewNote(event.target.anecdoteBody.value));
-        store.dispatch(notificationCreator('New Anecdote Added'));
-        setTimeout(()=>store.dispatch(notificationCreator(null)), 2000);
+        props.actionCreatorNewNote(event.target.anecdoteBody.value);
+        props.notificationCreator('New Anecdote Added');
+        setTimeout(()=>props.notificationCreator(null), 2000);
 
         event.target.anecdoteBody.value = '';
     };
@@ -29,4 +30,15 @@ const NewAnecdoteForm = ({store}) => {
     );
 };
 
-export default NewAnecdoteForm;
+const mapStateToProps = (state)=> {
+    return {
+        anecdotes: state.anecdotes
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        notificationCreator: (text) => dispatch(notificationCreator(text)),
+        actionCreatorNewNote: (data) => dispatch(actionCreatorNewNote(data))
+    }};
+export default connect(mapStateToProps, mapDispatchToProps)(NewAnecdoteForm);

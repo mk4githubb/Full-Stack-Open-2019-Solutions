@@ -1,11 +1,12 @@
 import React from 'react'
 import {actionCreatorNewValueInput} from "../reducers/filterReducer";
+import {connect} from "react-redux";
 
-const Filter = ({store}) => {
+const Filter = (props) => {
 
     const filterHandler = (event) => {
         event.preventDefault();
-        store.dispatch(actionCreatorNewValueInput(event.target.value));
+        props.actionCreatorNewValueInput(event.target.value);
     };
 
     return(
@@ -15,4 +16,9 @@ const Filter = ({store}) => {
     )
 };
 
-export default Filter;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actionCreatorNewValueInput: (text) => dispatch(actionCreatorNewValueInput(text))
+    }};
+
+export default connect(null, mapDispatchToProps)(Filter);

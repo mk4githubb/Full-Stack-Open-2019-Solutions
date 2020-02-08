@@ -1,17 +1,17 @@
 import React from 'react'
-import {actionCreatorUpVote} from "../reducers/anecdoteReducer";
+import {actionCreatorNewNote, actionCreatorUpVote} from "../reducers/anecdoteReducer";
+import {connect} from 'react-redux'
 import {notificationCreator} from "../reducers/notificationsReducer";
 
-const AnecdotesList = ({store}) => {
-    const anecdotes = store.getState().anecdotes;
+const AnecdotesList = (props) => {
 
     const vote = (id) => {
-        store.dispatch(actionCreatorUpVote(id));
-        store.dispatch(notificationCreator(`You up voted -  ${anecdotes.find(i => i.id === id).content}`));
-        setTimeout(() =>store.dispatch(notificationCreator(null)), 2000);
+        props.actionCreatorUpVote(id);
+        props.notificationCreator(`You up voted -  ${props.anecdotes.find(i => i.id === id).content}`);
+        setTimeout(() => props.notificationCreator(null), 2000);
     };
 
-    const list = anecdotes.map(
+    const list = props.anecdotes.map(
         anecdote => <div key={anecdote.id}>
             <div>
                 {anecdote.content}
@@ -31,4 +31,16 @@ const AnecdotesList = ({store}) => {
 
 };
 
-export default AnecdotesList;
+const mapStateToProps = (state)=> {
+    return {
+        anecdotes: state.anecdotes
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actionCreatorUpVote: (id) => dispatch(actionCreatorUpVote(id)),
+        notificationCreator: (text) => dispatch(notificationCreator(text))
+    }};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnecdotesList);
