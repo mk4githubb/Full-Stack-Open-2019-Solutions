@@ -5,10 +5,9 @@ import {notificationCreator} from "../reducers/notificationsReducer";
 
 const AnecdotesList = (props) => {
 
-    const vote = (id) => {
-        props.actionCreatorUpVote(id);
-        props.notificationCreator(`You up voted -  ${props.anecdotes.find(i => i.id === id).content}`);
-        setTimeout(() => props.notificationCreator(null), 2000);
+    const vote = anecdote => {
+        props.actionCreatorUpVote(anecdote);
+        props.notificationCreator(`You up voted -  ${props.anecdotes.find(i => i.id === anecdote.id).content}`,2000);
     };
 
     const list = props.anecdotes.map(
@@ -18,7 +17,7 @@ const AnecdotesList = (props) => {
             </div>
             <div>
                 has {anecdote.votes}
-                <button onClick={() => vote(anecdote.id)}>vote</button>
+                <button onClick={() => vote(anecdote)}>vote</button>
             </div>
         </div>
     );
@@ -39,8 +38,8 @@ const mapStateToProps = (state)=> {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actionCreatorUpVote: (id) => dispatch(actionCreatorUpVote(id)),
-        notificationCreator: (text) => dispatch(notificationCreator(text))
+        actionCreatorUpVote: (anecdote) => dispatch(actionCreatorUpVote(anecdote)),
+        notificationCreator: (text, time) => dispatch(notificationCreator(text, time))
     }};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnecdotesList);

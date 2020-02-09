@@ -1,4 +1,4 @@
-import {post} from "../Service";
+import {post, put} from "../Service";
 
 const reducer =  (state = [], action) => {
     switch (action.type) {
@@ -9,9 +9,7 @@ const reducer =  (state = [], action) => {
             return [...state];
 
         case 'addAnecdote':
-            const toAddAnecdote = newAnecdoteHandler(action.body);
-             post(toAddAnecdote);
-            const newState = [...state, toAddAnecdote];
+            const newState = [...state, action.body];
             return newState.sort((a, b) => b.votes - a.votes);
         case 'initAnecdotes':
             return action.anecdotes.sort((a, b) => b.votes - a.votes);
@@ -22,25 +20,33 @@ const reducer =  (state = [], action) => {
 
 const getId = () => (100000 * Math.random()).toFixed(0);
 
-const newAnecdoteHandler = (body) => {
-    return {
-        content: body,
-        id: getId(),
-        votes: 0
-    }
-};
 
-export const actionCreatorUpVote = (id) => {
-    return {
-        type: 'vote',
-        id: id
+export const actionCreatorUpVote = (anecdote) => {
+
+    return dispatch => {
+
+        put(anecdote.id, {...anecdote, votes:anecdote.votes+1});
+        dispatch({
+            type: 'vote',
+            id: anecdote.id
+        })
     }
 };
 
 export const actionCreatorNewNote = (data) => {
-    return {
-        type: 'addAnecdote',
-        body: data
+    return async (dispatch) => {
+
+        const newAnecdote = { content:data,
+            id:getId(),
+            votes: 0
+        };
+
+        const received = await post(newAnecdote);
+
+        dispatch({
+            type: 'addAnecdote',
+            body: received
+        })
     }
 };
 
