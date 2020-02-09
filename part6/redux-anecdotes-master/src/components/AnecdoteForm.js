@@ -15,7 +15,6 @@ const NewAnecdoteForm = (props) => {
         props.actionCreatorNewNote(event.target.anecdoteBody.value);
         props.notificationCreator('New Anecdote Added');
         setTimeout(()=>props.notificationCreator(null), 2000);
-
         event.target.anecdoteBody.value = '';
     };
 
@@ -41,4 +40,5 @@ const mapDispatchToProps = (dispatch) => {
         notificationCreator: (text) => dispatch(notificationCreator(text)),
         actionCreatorNewNote: (data) => dispatch(actionCreatorNewNote(data))
     }};
+
 export default connect(mapStateToProps, mapDispatchToProps)(NewAnecdoteForm);

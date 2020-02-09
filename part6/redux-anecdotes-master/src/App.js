@@ -1,13 +1,19 @@
-import React from 'react';
+import React , {useEffect}from 'react';
 import NewAnecdoteForm from "./components/AnecdoteForm";
 import AnecdotesList from "./components/AnecdotesList";
 import Notification from "./components/Notification";
 import Filter from "./components/filter";
 import {connect} from "react-redux";
 import SearchHandler from "./components/SearchHandler";
+import {actionCreatorInitAnecdotes} from "./reducers/anecdoteReducer";
+import {getAll} from "./Service";
 
 
-const App = () => {
+const App =  (props) => {
+
+    useEffect( () => {
+        getAll().then(response => props.initAnecdotes(response));
+    },[] );
 
     return (
         <div>
@@ -25,11 +31,10 @@ const App = () => {
     )
 };
 
-const mapStateToProps = (state)=> {
+const mapDispatchToProps = (dispatch) => {
     return {
-        filterText: state.filterText,
-        anecdotes: state.anecdotes
+        initAnecdotes: (anecdotes) => dispatch(actionCreatorInitAnecdotes(anecdotes))
     }
 };
 
-export default connect(mapStateToProps)(App);
+export default connect(null, mapDispatchToProps)(App);

@@ -9,7 +9,7 @@ export const actionCreatorNewValueInput = (text) => {
 const filterReducer = (state = null, action)=> {
         switch (action.type) {
             case 'setFilteringText':
-                state = action.text==''? null : action.text;
+                state = action.text ===''? null : action.text;
                 return state;
             default:
                 return state;

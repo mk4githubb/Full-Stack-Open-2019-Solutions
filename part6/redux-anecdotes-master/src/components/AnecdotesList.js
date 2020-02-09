@@ -1,5 +1,5 @@
 import React from 'react'
-import {actionCreatorNewNote, actionCreatorUpVote} from "../reducers/anecdoteReducer";
+import { actionCreatorUpVote} from "../reducers/anecdoteReducer";
 import {connect} from 'react-redux'
 import {notificationCreator} from "../reducers/notificationsReducer";
 
