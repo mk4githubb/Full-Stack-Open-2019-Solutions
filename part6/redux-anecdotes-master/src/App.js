@@ -1,4 +1,4 @@
-import React , {useEffect}from 'react';
+import React, {useEffect} from 'react';
 import NewAnecdoteForm from "./components/AnecdoteForm";
 import AnecdotesList from "./components/AnecdotesList";
 import Notification from "./components/Notification";
@@ -9,22 +9,22 @@ import {actionCreatorInitAnecdotes} from "./reducers/anecdoteReducer";
 import {getAll} from "./Service";
 
 
-const App =  (props) => {
+const App = (props) => {
 
-    useEffect( () => {
+    useEffect(() => {
         getAll().then(response => props.initAnecdotes(response));
-    },[] );
+    }, []);
 
     return (
         <div>
             <Notification/>
             <h2>Anecdotes</h2>
-            <Filter />
-            <SearchHandler />
+            <Filter/>
+            <SearchHandler/>
 
             <div style={{marginTop: '10px'}}>
-                <NewAnecdoteForm />
-                <AnecdotesList />
+                <NewAnecdoteForm/>
+                <AnecdotesList/>
             </div>
 
         </div>

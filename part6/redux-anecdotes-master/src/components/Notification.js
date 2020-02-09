@@ -8,7 +8,7 @@ const Notification = (props) => {
         borderWidth: 1
     };
 
-    if (props.notification==null){
+    if (props.notification == null) {
         return null;
     }
 
@@ -19,7 +19,7 @@ const Notification = (props) => {
     )
 };
 
-const mapStateToProps = (state)=> {
+const mapStateToProps = (state) => {
     return {
         notification: state.notification
     }

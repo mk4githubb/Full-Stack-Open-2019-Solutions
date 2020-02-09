@@ -1,6 +1,6 @@
 import {post, put} from "../Service";
 
-const reducer =  (state = [], action) => {
+const reducer = (state = [], action) => {
     switch (action.type) {
         case 'vote':
             const found = state.find(i => i.id === action.id);
@@ -25,7 +25,7 @@ export const actionCreatorUpVote = (anecdote) => {
 
     return dispatch => {
 
-        put(anecdote.id, {...anecdote, votes:anecdote.votes+1});
+        put(anecdote.id, {...anecdote, votes: anecdote.votes + 1});
         dispatch({
             type: 'vote',
             id: anecdote.id
@@ -36,8 +36,9 @@ export const actionCreatorUpVote = (anecdote) => {
 export const actionCreatorNewNote = (data) => {
     return async (dispatch) => {
 
-        const newAnecdote = { content:data,
-            id:getId(),
+        const newAnecdote = {
+            content: data,
+            id: getId(),
             votes: 0
         };
 
@@ -51,10 +52,10 @@ export const actionCreatorNewNote = (data) => {
 };
 
 export const actionCreatorInitAnecdotes = (anecdotes) => {
-  return {
-      type:'initAnecdotes',
-      anecdotes: anecdotes
-  }
+    return {
+        type: 'initAnecdotes',
+        anecdotes: anecdotes
+    }
 };
 
 export default reducer

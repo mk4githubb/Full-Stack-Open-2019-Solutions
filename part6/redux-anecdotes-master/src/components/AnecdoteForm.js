@@ -13,7 +13,7 @@ const NewAnecdoteForm = (props) => {
         }
 
         props.actionCreatorNewNote(event.target.anecdoteBody.value);
-        props.notificationCreator('New Anecdote Added',5000);
+        props.notificationCreator('New Anecdote Added', 5000);
         event.target.anecdoteBody.value = '';
     };
 
@@ -28,7 +28,7 @@ const NewAnecdoteForm = (props) => {
     );
 };
 
-const mapStateToProps = (state)=> {
+const mapStateToProps = (state) => {
     return {
         anecdotes: state.anecdotes
     }
@@ -36,8 +36,9 @@ const mapStateToProps = (state)=> {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        notificationCreator: (text,time) => dispatch(notificationCreator(text,time)),
+        notificationCreator: (text, time) => dispatch(notificationCreator(text, time)),
         actionCreatorNewNote: (data) => dispatch(actionCreatorNewNote(data))
-    }};
+    }
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewAnecdoteForm);

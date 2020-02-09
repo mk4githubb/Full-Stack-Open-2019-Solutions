@@ -1,12 +1,11 @@
-
 export const notificationCreator = (text, time) => {
     return dispatch => {
         dispatch({
-            type:'setNotification',
+            type: 'setNotification',
             notification: text
         });
-        setTimeout(()=>dispatch({
-            type:'setNotification',
+        setTimeout(() => dispatch({
+            type: 'setNotification',
             notification: null
         }), time);
     }

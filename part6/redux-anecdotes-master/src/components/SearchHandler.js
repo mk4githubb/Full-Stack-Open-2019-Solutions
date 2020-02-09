@@ -8,14 +8,14 @@ const SearchHandler = ({filterText, anecdotes}) => {
     return filtered.map(i => <OneResult anecdote={i}/>);
 };
 
-const OneResult = ({anecdote})=> {
+const OneResult = ({anecdote}) => {
     return <li>{anecdote.content}</li>
 };
 
-const mapStateToProps = (state)=> {
+const mapStateToProps = (state) => {
     return {
         filterText: state.filterText,
-        anecdotes:state.anecdotes
+        anecdotes: state.anecdotes
     }
 };
 

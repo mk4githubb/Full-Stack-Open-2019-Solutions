@@ -9,8 +9,8 @@ const Filter = (props) => {
         props.actionCreatorNewValueInput(event.target.value);
     };
 
-    return(
-        <form >
+    return (
+        <form>
             <input type={'text'} onChange={filterHandler} placeholder={'search...'}/>
         </form>
     )
@@ -19,6 +19,7 @@ const Filter = (props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         actionCreatorNewValueInput: (text) => dispatch(actionCreatorNewValueInput(text))
-    }};
+    }
+};
 
 export default connect(null, mapDispatchToProps)(Filter);
