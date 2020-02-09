@@ -1,0 +1,62 @@
+
+.loggedInInfo {
+    grid-column: 1/-1;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 3px 7px 3px 7px;
+}
+
+#logoutContainer {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#blogCreationContainer {
+    flex: 3 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.blogCreationForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#label {
+    align-items: flex-start;
+    text-align: center;
+}
+
+.blogCreationForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.blogCreationFormDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.inputField {
+    flex: 1 1 auto;
+    border-radius: 5px;
+}
+
+#blogBody {
+    height: 120px;
+}
+
+#createBlogButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.formLabel {
+    margin: 0 10px 0 10px;
+}

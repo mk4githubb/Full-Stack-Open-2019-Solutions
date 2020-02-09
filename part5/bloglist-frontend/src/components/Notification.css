@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Major+Mono+Display&display=swap');
+
+.notification {
+    grid-column: 1/-1;
+    border: lightslategrey solid 2px;
+    font-family: 'Major Mono Display', monospace, sans-serif;
+    color: black;
+    margin-top: 10px;
+}
