@@ -2,9 +2,11 @@ import React from 'react'
 import useFormHook from '../hooks/formHook'
 import useResource from "../hooks/useResources";
 import useFeild from "../hooks/feildHook";
-import './LoginForm.css';
+import {ac_setNotification_Text} from "../reducers/notificationTextReducer";
+import {ac_logout, ac_login, ac_createUser} from "../reducers/loggedInUserReducer";
+import {connect} from 'react-redux'
 
-const LoginForm = ({syncer}) => {
+const LoginForm = (props) => {
     const signUp = useFeild(false);
     const username = useFormHook('text');
     const password = useFormHook('password');
@@ -24,10 +26,10 @@ const LoginForm = ({syncer}) => {
 
     const usernamePasswordValidator = () => {
         if (!username || username.value.length === 0 || !password || password.value.length === 0) {
-            syncer.notificationConfig('Title or body cannot be empty');
+            props.setNotificationText('Title or body cannot be empty');
             return false;
         } else if (username.value.length < 3 || password.value.length < 3) {
-            syncer.notificationConfig("Length of username or password can't be less than 3");
+            props.setNotificationText("Length of username or password can't be less than 3");
             return false;
         }
         return true
@@ -45,17 +47,7 @@ const LoginForm = ({syncer}) => {
             password: password.value
         };
 
-        try {
-            const returnedObject = await login.post(requestObject);
-            const returnResultData = returnedObject.data;
-            window.localStorage.setItem('token', JSON.stringify(returnResultData));
-            username.clear();
-            password.clear();
-            update(returnResultData, syncer);
-        } catch (exception) {
-            syncer.notificationConfig('Invalid Username or Password');
-            console.log('error');
-        }
+        props.login(login, requestObject);
     };
 
     const createUserHandler = async (event) => {
@@ -70,30 +62,22 @@ const LoginForm = ({syncer}) => {
             password: password.value
         };
 
-        try {
-            const createdUser = await users.post(newUser);
-            syncer.notificationConfig(`User created with username ${createdUser.data.username}. Please Log in.`);
-            toggleSignUpLoginButton();
-
-        } catch (exception) {
-            syncer.notificationConfig(`Error Creating User`)
-        }
-
+        props.createUser(users, newUser);
     };
 
     if (signUp.value) {
         return (
-            <form onSubmit={createUserHandler} className={'signUpLogInForm'}>
-                <div id={'signUpFormContainer'}>
-                    <div id={'username'}>
+            <form onSubmit={createUserHandler}>
+                <div>
+                    <div>
                         <label>Enter Username</label>
                         <input type={username.type} value={username.value} onChange={username.update}/>
                     </div>
-                    <div id={'password'}>
+                    <div>
                         <label>Enter Password</label>
                         <input type={password.type} value={password.value} onChange={password.update}/>
                     </div>
-                    <div id={'button'}>
+                    <div>
                         <button type={'submit'}>Sign up!</button>
                     </div>
                 </div>
@@ -103,17 +87,17 @@ const LoginForm = ({syncer}) => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className={'signUpLogInForm'}>
-            <div id={'loginFormContainer'}>
-                <div id={'username'}>
+        <form onSubmit={handleSubmit}>
+            <div >
+                <div>
                     <label>Username</label>
                     <input type={username.type} value={username.value} onChange={username.update}/>
                 </div>
-                <div id={'password'}>
+                <div>
                     <label>Password</label>
                     <input type={password.type} value={password.value} onChange={password.update}/>
                 </div>
-                <div id={'button'}>
+                <div>
                     <button type={'submit'}>Login</button>
                 </div>
             </div>
@@ -122,4 +106,13 @@ const LoginForm = ({syncer}) => {
     )
 };
 
-export default LoginForm;
+const mapDispatchToProps = (dispatch)=> {
+    return{
+        setNotificationText:(data) => dispatch(ac_setNotification_Text(data)),
+        logout:() => dispatch(ac_logout()),
+        login: (db, data) => dispatch(ac_login(db, data)),
+        createUser: (db, newUser) => dispatch(ac_createUser(db, newUser))
+    }
+};
+
+export default connect(null, mapDispatchToProps)(LoginForm);

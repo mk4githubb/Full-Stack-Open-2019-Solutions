@@ -1,82 +1,64 @@
 import React, {useEffect} from 'react';
-import './App.css';
 import LoginForm from './components/LoginForm'
 import Blog from "./components/Blog";
-import useFeild from "./hooks/feildHook";
 import LoggedInfo from './components/LoggedInfo'
-import useListHook from "./hooks/listHook";
 import Notification from "./components/Notification";
 import Header from "./components/Header";
 import useResource from './hooks/useResources'
+import {connect} from 'react-redux'
+import {ac_setLoggedInUserFromLS} from "./reducers/loggedInUserReducer";
+import {ac_setNotification_Text} from "./reducers/notificationTextReducer";
+import {ac_InitBlogs} from "./reducers/blogsReducer";
 
-function App() {
 
-    const blogs = useListHook([]);
-    const loggedInUserName = useFeild(null);
-    const loggedInsName = useFeild(null);
-    const notification = useFeild(null);
+function App(props) {
+
     const blogsDB = useResource('http://localhost:3003/api/blogs');
     const usersDB = useResource('http://localhost:3003/api/users');
 
-    const notificationConfig = (text) => {
-        notification.update(text);
-        setTimeout(() => notification.clear(null), 2000)
-    };
-
-    const syncer = {
-        blogs: blogs,
-        loggedInUserName: loggedInUserName,
-        loggedInsName: loggedInsName,
-        'notificationConfig': notificationConfig,
-        blogsDB: blogsDB,
-        usersDB: usersDB
-    };
-
-    const loggedInUsersBlogs = async () => {
-        const queryData = await blogsDB.getAll();
-        const retrievedBlogs = queryData.data;
-        const filtered = retrievedBlogs.filter(i => i.author.username === loggedInUserName.value);
-        blogs.update(filtered);
-    };
 
     useEffect(() => {
         const alreadyLoggedInUser = window.localStorage.getItem('token');
 
         if (alreadyLoggedInUser) {
             let parsed = JSON.parse(alreadyLoggedInUser);
-            loggedInUserName.update(parsed.username);
-            loggedInsName.update(parsed.name);
+            props.setLoggedInUser(parsed);
         }
+
+        props.initBlogs(blogsDB);
 
     }, []);
 
-    useEffect(() => {
-
-        if (loggedInUserName.value) {
-            loggedInUsersBlogs();
-        } else {
-            blogsDB.getAll()
-                .then(response => {
-                    console.log(response.data);
-                    blogs.update(response.data);
-                });
-        }
-
-    }, [loggedInUserName.value]);
 
     return (
-        <div className={'App'}>
-            <div className={'headerLoginContainer'}>
+        <div>
+            <div>
                 <Header/>
-                {loggedInUserName.value == null ? <LoginForm syncer={syncer}/> : null}
+                {!props.loggedInUser ? <LoginForm /> : null}
             </div>
-            <Notification text={notification.value}/>
-            {loggedInUserName.value != null ? <LoggedInfo name={loggedInsName.value} syncer={syncer}/> : null}
-            <div className={'allBlogsContainer'}>
-                {blogs.value.map(i => <Blog syncer={syncer} blog={i} key={i.id}/>)}
+            <Notification text={props.notificationText}/>
+            {props.loggedInUser ? <LoggedInfo db = {blogsDB}/> : null}
+            <div>
+                {props.blogs.map(i => <Blog blog={i} db={blogsDB} key={i.id}/>)}
             </div>
         </div>
     )
 }
 
-export default App;
+const mapStateToProps = (state)=>{
+    return{
+        blogs:state.blogs,
+        loggedInUser:state.loggedInUser,
+        notificationText:state.notificationText
+    }
+};
+
+const mapDispatchToProps = (dispatch)=> {
+    return{
+        setNotificationText:(data) => dispatch(ac_setNotification_Text(data)),
+        setLoggedInUser:(data)=>dispatch(ac_setLoggedInUserFromLS(data)),
+        initBlogs: (db) => dispatch(ac_InitBlogs(db))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
