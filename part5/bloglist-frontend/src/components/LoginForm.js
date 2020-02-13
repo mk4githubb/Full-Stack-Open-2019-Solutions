@@ -13,10 +13,6 @@ const LoginForm = (props) => {
     const login = useResource('http://localhost:3003/api/login');
     const users = useResource('http://localhost:3003/api/users');
 
-    const update = (data, syncer) => {
-        syncer.loggedInUserName.update(data.username);
-        syncer.loggedInsName.update(data.name);
-    };
 
     const toggleSignUpLoginButton = () => {
         username.clear();

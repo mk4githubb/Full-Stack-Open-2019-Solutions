@@ -1,3 +1,4 @@
+import React from 'react'
 
 const loggedInUseReducer = (state = null, action) => {
     switch (action.type) {
@@ -35,7 +36,6 @@ export const ac_login = (db, data) => {
             const returnedObject = await db.post(data);
             const returnResultData = returnedObject.data;
             window.localStorage.setItem('token', JSON.stringify(returnResultData));
-            // update(returnResultData, syncer);
 
             dispatch({
                 type: 'setUser',
@@ -46,6 +46,7 @@ export const ac_login = (db, data) => {
                 type: 'setNotification',
                 data: 'Login Successful'
             });
+
         } catch (exception) {
             return dispatch => dispatch({
                 type: 'setNotification',

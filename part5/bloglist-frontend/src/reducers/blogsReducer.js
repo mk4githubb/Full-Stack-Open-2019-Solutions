@@ -31,7 +31,6 @@ export const ac_InitBlogs =  (db)=> {
         }
         catch (exception) {
             console.log('Error Getting Blogs');
-            debugger;
             return
         }
     }

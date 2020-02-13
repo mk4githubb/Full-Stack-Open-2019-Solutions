@@ -46,6 +46,11 @@ const errorHandler = (error, request, response, next) =>{
             'error':'validation error'
         })
     }
+    else if( error.message ==='incorrect credentials'){
+        response.status(400).send({
+                'error':'validation error'
+        })
+    }
 
     next(error);
 };

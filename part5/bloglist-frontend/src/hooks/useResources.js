@@ -7,7 +7,7 @@ const useResource = (url) => {
 
     const URL = url;
 
-    const getAll = () => axios.get(URL);
+    const getAll = async () => axios.get(URL);
 
     const getOne = (id) => axios.get(`${URL}/${id}`);
 
