@@ -33,7 +33,7 @@ const OneBlog = (props)=>{
                 </Card.Description>
             </Card.Content>
             <Card.Content extra>
-                <Button as='div' labelPosition='right' onClick={likeHandler}>
+                <Button as='div' labelPosition='right' floated={'left'} onClick={likeHandler}>
                     <Button color='red'>
                         <Icon name='heart' />
                         Like
@@ -43,17 +43,27 @@ const OneBlog = (props)=>{
                     </Label>
                 </Button>
 
-                <Button animated floated={'right'}>
-                    <Button.Content visible>Delete blog</Button.Content>
-                    <Button.Content hidden>
-                        <Icon name='delete' />
-                    </Button.Content>
-                </Button>
+                <DeleteButton blog={props.blog} loggedInUser={props.loggedInUser}/>
 
             </Card.Content>
         </Card>
     )
 };
+
+const DeleteButton = ({blog , loggedInUser}) => {
+    if(blog.author.username == loggedInUser){
+        return  (
+            <Button animated floated={'right'}>
+                <Button.Content visible>Delete blog</Button.Content>
+                <Button.Content hidden>
+                    <Icon name='delete' />
+                </Button.Content>
+            </Button>
+        )
+    }
+    return null;
+};
+
 
 const mapStateToProps = (state)=>{
     return{
