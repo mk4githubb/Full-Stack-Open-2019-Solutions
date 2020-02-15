@@ -16,15 +16,12 @@ import Login from "./New Components/Login/Login";
 import About from "./New Components/About/About";
 import Users from "./New Components/Users/Users";
 import {ac_initUsers} from "./reducers/usersReducer";
-import LoggedInUser from "./New Components/LoggedInUserPage/LoggedInUser";
 
 
 function App(props) {
 
-    const blogsDB = useResource('http://localhost:3003/api/blogs');
-    const usersDB = useResource('http://localhost:3003/api/users');
-
-
+    const blogsDB = useResource('https://api-mk.herokuapp.com/api/blogs');
+    const usersDB = useResource('https://api-mk.herokuapp.com/api/users');
 
     useEffect(() => {
         const alreadyLoggedInUser = window.localStorage.getItem('token');
@@ -39,12 +36,11 @@ function App(props) {
 
     }, []);
 
-
     return (
         <Container>
             <Router>
-                <Route path={'/home'} render={()=>props.loggedInUser?<LoggedInUser/>:<LandingPage db={blogsDB} />}/>
-                <Route exact path={'/'} render={()=>props.loggedInUser?<LoggedInUser/>:<LandingPage db={blogsDB} />}/>
+                <Route path={'/home'} render={()=><LandingPage/>}/>
+                <Route exact path={'/'} render={()=> <LandingPage/>}/>
                 <Route path={'/signup'} render={()=><Signup/>}/>
                 <Route path={'/login'} render={()=> props.loggedInUser?<Redirect to={'/home'}/>:<Login/>}/>
                 <Route path={'/about'} render={()=><About/>}/>

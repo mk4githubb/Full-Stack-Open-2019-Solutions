@@ -36,7 +36,7 @@ const MidSection =(props)=>{
 
     }
     return(
-        <Container>
+        <Segment inverted textAlign={'center'} vertical style={{ minHeight: 300, padding: '1em 0em' }}>
             <Header as={'h1'} style={{
                 fontSize: '4em',
                 fontWeight: 'normal',
@@ -69,7 +69,7 @@ const MidSection =(props)=>{
                     </Statistic>
                 </Statistic.Group>
             </Container>
-        </Container>
+        </Segment>
     )
 };
 

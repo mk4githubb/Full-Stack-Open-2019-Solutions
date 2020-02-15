@@ -10,6 +10,7 @@ const TransitionPortal = () =>{
 
     return(
         <TransitionablePortal
+
             onClose={() => setOpen(false)}
             open={open}
             trigger={
@@ -21,7 +22,7 @@ const TransitionPortal = () =>{
 
                 />
             }
-            style={{border:'2px solid green'}}
+            style={{border:'2px solid green', height:'100vh'}}
         >
             <CreateBlog/>
         </TransitionablePortal>

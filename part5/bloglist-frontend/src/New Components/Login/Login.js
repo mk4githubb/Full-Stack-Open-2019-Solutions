@@ -10,7 +10,7 @@ import {connect} from "react-redux";
 
 const Login = (props) => {
 
-    const login = useResource('http://localhost:3003/api/login');
+    const login = useResource('https://api-mk.herokuapp.com/api/login');
     const username = useFormHook('text');
     const password = useFormHook('password');
 

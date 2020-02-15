@@ -28,15 +28,9 @@ const LoggedInfo = (props) => {
             return;
         }
 
-        const parsedToken = JSON.parse(window.localStorage.getItem('token'));
-
-        const getTokenConfig = () => {
-            return `bearer ${parsedToken.webToken}`
-        };
-
         const config = {
             headers: {
-                Authorization: getTokenConfig()
+                Authorization: `bearer ${props.loggedInUser.webToken}`
             }
         };
 
