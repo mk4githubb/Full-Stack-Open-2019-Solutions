@@ -19,14 +19,14 @@ const loggedInUseReducer = (state = null, action) => {
 
 export const ac_setLoggedInUserFromLS = (data) => {
     return {
-        type:'setUser',
+        type: 'setUser',
         data: data
     }
 };
 
 export const ac_logout = () => {
     return {
-        type:'logout',
+        type: 'logout',
     }
 };
 
@@ -57,15 +57,15 @@ export const ac_login = (db, data) => {
 };
 
 
-export const ac_createUser =  (db, newUser) => {
-    return async dispatch =>{
+export const ac_createUser = (db, newUser) => {
+    return async dispatch => {
         try {
-            const createdUser = await db.post(newUser);
-            return dispatch => dispatch({
+            await db.post(newUser);
+            dispatch({
                 type: 'setNotification',
                 data: 'User Created Please Log in'
-            })
-
+            });
+            console.log('user Created')
         } catch (exception) {
             dispatch({
                 type: 'setNotification',

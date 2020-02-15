@@ -16,6 +16,7 @@ import Login from "./New Components/Login/Login";
 import About from "./New Components/About/About";
 import Users from "./New Components/Users/Users";
 import {ac_initUsers} from "./reducers/usersReducer";
+import LoggedInUser from "./New Components/LoggedInUserPage/LoggedInUser";
 
 
 function App(props) {
@@ -42,8 +43,8 @@ function App(props) {
     return (
         <Container>
             <Router>
-                <Route path={'/home'} render={()=><LandingPage db={blogsDB} />}/>
-                <Route exact path={'/'} render={()=><LandingPage db={blogsDB} />}/>
+                <Route path={'/home'} render={()=>props.loggedInUser?<LoggedInUser/>:<LandingPage db={blogsDB} />}/>
+                <Route exact path={'/'} render={()=>props.loggedInUser?<LoggedInUser/>:<LandingPage db={blogsDB} />}/>
                 <Route path={'/signup'} render={()=><Signup/>}/>
                 <Route path={'/login'} render={()=> props.loggedInUser?<Redirect to={'/home'}/>:<Login/>}/>
                 <Route path={'/about'} render={()=><About/>}/>

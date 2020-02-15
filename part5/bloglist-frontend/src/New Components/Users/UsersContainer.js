@@ -1,10 +1,17 @@
-import useResource from "../../hooks/useResources";
-import {Card} from "semantic-ui-react";
+import {Card, Segment} from "semantic-ui-react";
 import React,{useEffect} from 'react'
 import OneUser from "./OneUser";
 import {connect} from 'react-redux'
 
 const UsersContainer = (props ) => {
+
+    if(!props.users|| props.users.length==0){
+        return(
+            <Segment loading>
+                <img src={require('../../resources/paragraph.png')} className="ui image"/>
+            </Segment>
+        )
+    }
 
     return (
         <Card.Group itemsPerRow={4}>

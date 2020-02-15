@@ -1,14 +1,39 @@
-import {Container, Header, Input, Statistic} from "semantic-ui-react";
+import {Container, Header, Input, Statistic, Segment, Grid, Icon, Search, Divider,Button} from "semantic-ui-react";
 import React from "react";
 import {connect} from "react-redux";
 import {ac_setSearch_Text} from "../reducers/searchTextReducer";
+import TransitionPortal from "./LoggedInUserPage/transitionPortal";
 
 const MidSection =(props)=>{
 
     if(props.loggedInUser){
-        return <Container >
-            <Input icon='search' placeholder='Search...' style={{width:'50%', marginTop:'1em'}} onChange={(event)=>props.setSearchText(event.target.value)}/>
-        </Container>
+        return (
+            <Segment placeholder>
+                <Grid columns={2}  stackable textAlign='center'>
+                    <Divider vertical>Or</Divider>
+
+                    <Grid.Row verticalAlign='middle'>
+                        <Grid.Column>
+                            <Header icon>
+                                <Icon name='newspaper' />
+                                Create a blog...
+                            </Header>
+                            <TransitionPortal/>
+                        </Grid.Column>
+
+                        <Grid.Column>
+                            <Header icon>
+                                <Icon name='search' />
+                                Find a Blog
+                            </Header>
+
+                            <Search placeholder='Search blogs...' />
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+            </Segment>
+        )
+
     }
     return(
         <Container>

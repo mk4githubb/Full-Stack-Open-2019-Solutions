@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, Segment} from "semantic-ui-react";
+import {Card, Segment, Image} from "semantic-ui-react";
 import OneBlog from "./OneBlog";
 import {ac_setNotification_Text} from "../reducers/notificationTextReducer";
 import {ac_deleteBlog, ac_likeBlog} from "../reducers/blogsReducer";
@@ -9,16 +9,25 @@ import {connect} from "react-redux";
 const BlogsContainer = (props)=> {
 
     let blogs = props.blogs;
+
     if(props.searchText != null ){
           blogs = props.blogs.filter( i => i.text.includes(props.searchText));
     }
+
+    if(!blogs || blogs.length ==0 ){
+        return (
+            <Segment loading>
+                <img src={require('../resources/paragraph.png')} className="ui image"/>
+            </Segment>
+        )
+    }
+
     return(
         <Segment>
             <Card.Group itemsPerRow={2}>
                 {blogs.map(i => <OneBlog db={props.db} blog={i}/>)}
             </Card.Group>
         </Segment>
-
     )
 };
 

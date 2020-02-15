@@ -8,7 +8,9 @@ const LandingPage = (props) => {
     return(
         <Grid>
           <AppHeader/>
-          <BlogsContainer db={props.db}/>
+          <Grid.Row style={{height:'40vh'}} columns={1} centered >
+              <BlogsContainer db={props.db}/>
+          </Grid.Row>
         </Grid>
     )
 };

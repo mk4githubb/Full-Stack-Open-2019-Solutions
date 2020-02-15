@@ -45,6 +45,9 @@ const Signup = (props) => {
                 <Navbar/>
             </Grid.Row>
             <Grid.Row centered>
+                <MessageShower text={props.notificationText}/>
+            </Grid.Row>
+            <Grid.Row centered>
                 <Grid textAlign={'center'}  style={{ height: '80vh'}} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 450 , minWidth: 300}}>
                         <Header as={'h2'} color='teal' textAlign={'center'}>
@@ -75,6 +78,19 @@ const Signup = (props) => {
         </Grid>
 
     )
+};
+
+const MessageShower = ({text}) => {
+
+    if(text){
+        return <Message positive>
+                <Message.Header>{}</Message.Header>
+                <p>
+                    Go to your <b>special offers</b> page to see now.
+                </p>
+        </Message>
+    }
+    return null;
 };
 
 const mapStateToProps = (state)=>{
