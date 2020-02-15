@@ -43,13 +43,13 @@ export const ac_login = (db, data) => {
             });
 
             dispatch({
-                type: 'setNotification',
+                type: 'setNotificationText',
                 data: 'Login Successful'
             });
 
         } catch (exception) {
             return dispatch => dispatch({
-                type: 'setNotification',
+                type: 'setNotificationText',
                 data: 'Error Logging in'
             })
         }
@@ -62,13 +62,13 @@ export const ac_createUser = (db, newUser) => {
         try {
             await db.post(newUser);
             dispatch({
-                type: 'setNotification',
+                type: 'setNotificationText',
                 data: 'User Created Please Log in'
             });
             console.log('user Created')
         } catch (exception) {
             dispatch({
-                type: 'setNotification',
+                type: 'setNotificationText',
                 data: 'Error Creating User'
             })
         }

@@ -2,7 +2,7 @@
 export const ac_setSearch_Text =  (text) => {
     return async dispatch => {
         dispatch({
-            type: 'setText',
+            type: 'setSearchText',
             data:text
         });
     }
@@ -11,14 +11,14 @@ export const ac_setSearch_Text =  (text) => {
 
 const searchTextReducer = (state = null, action) => {
     switch (action.type) {
-        case 'setText':
+        case 'setSearchText':
             if(action.data == ''){
                 return state = null;
             }
             state = action.data;
             return state;
 
-        case 'removeText':
+        case 'removeSearchText':
             state = null;
             return state;
 

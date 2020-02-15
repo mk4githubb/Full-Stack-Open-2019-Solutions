@@ -20,8 +20,8 @@ import {ac_initUsers} from "./reducers/usersReducer";
 
 function App(props) {
 
-    const blogsDB = useResource('https://api-mk.herokuapp.com/api/blogs');
-    const usersDB = useResource('https://api-mk.herokuapp.com/api/users');
+    const blogsDB = useResource('http://localhost:3003/blogs');
+    const usersDB = useResource('http://localhost:3003/users');
 
     useEffect(() => {
         const alreadyLoggedInUser = window.localStorage.getItem('token');

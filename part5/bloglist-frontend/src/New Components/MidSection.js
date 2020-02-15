@@ -8,7 +8,7 @@ const MidSection =(props)=>{
 
     if(props.loggedInUser){
         return (
-            <Segment placeholder>
+            <Segment style={{border:'2px solid green'}} placeholder>
                 <Grid columns={2}  stackable textAlign='center'>
                     <Divider vertical>Or</Divider>
 

@@ -2,13 +2,13 @@
 export const ac_setNotification_Text =  (text) => {
     return async dispatch => {
         dispatch({
-            type: 'setText',
+            type: 'setNotificationText',
             data:text
         });
 
         setTimeout(() => dispatch({
-            type: 'setText',
-            data:null
+            type: 'setNotificationText',
+            data: null
         }), 2000);
     }
 };
@@ -16,7 +16,7 @@ export const ac_setNotification_Text =  (text) => {
 
 const notificationTextReducer = (state = null, action) => {
     switch (action.type) {
-        case 'setText':
+        case 'setNotificationText':
             state = action.data;
             return state;
 
