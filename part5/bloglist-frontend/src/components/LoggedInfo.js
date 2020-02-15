@@ -1,34 +1,32 @@
 import React from 'react'
 import useFormHook from "../hooks/formHook";
 import useFeild from "../hooks/feildHook";
-import './LoggedInfo.css'
+import {ac_setNotification_Text} from "../reducers/notificationTextReducer";
+import {ac_logout} from "../reducers/loggedInUserReducer";
+import {ac_createBlog} from "../reducers/blogsReducer";
+import {connect} from 'react-redux'
 
-const LoggedInfo = ({name, syncer}) => {
+const LoggedInfo = (props) => {
     const title = useFormHook('text');
     const text = useFormHook('text');
 
     const logoutHandler = () => {
-        window.localStorage.clear();
-        syncer.loggedInUserName.clear();
-        syncer.loggedInsName.clear();
-        syncer.blogs.clear();
+        props.logout();
     };
-
 
     const blogCreateHandler = async (event) => {
         event.preventDefault();
 
         if (!title || title.value.length === 0 || !text || text.value.length === 0) {
-            syncer.notificationConfig('Title or body cannot be empty');
+            props.setNotificationText('Title or body cannot be empty');
             return;
         } else if (title.value.length > 50) {
-            syncer.notificationConfig("Length of title can't exceed 50");
+            props.setNotificationText("Length of title can't exceed 50");
             return;
         } else if (text.value.length > 256) {
-            syncer.notificationConfig("Length of title can't exceed 256");
+            props.setNotificationText("Length of title can't exceed 256");
             return;
         }
-
 
         const parsedToken = JSON.parse(window.localStorage.getItem('token'));
 
@@ -47,21 +45,13 @@ const LoggedInfo = ({name, syncer}) => {
             text: text.value,
         };
 
-        try {
-            const receivedData = await syncer.blogsDB.post(newBlog, config);
-            syncer.notificationConfig('Blog Saved');
-            syncer.blogs.append(receivedData.data);
-            title.clear();
-            text.clear();
-        } catch (exception) {
-            syncer.notificationConfig('Error occurred while saving blog');
-        }
+        props.createBlog(props.db, config, newBlog);
     };
 
     return (
         <div className={'loggedInInfo'}>
             <div id={'logoutContainer'}>
-                <div>logged in: {name} </div>
+                <div>logged in: {props.loggedInUser.name} </div>
                 <Button text={'Logout'} handler={logoutHandler}/>
             </div>
             <CreateBlogForm title={title} text={text} handler={blogCreateHandler}/>
@@ -109,4 +99,20 @@ const CreateBlogForm = ({title, text, handler}) => {
     )
 };
 
-export default LoggedInfo;
+const mapStateToProps = (state)=>{
+    return{
+        blogs:state.blogs,
+        loggedInUser:state.loggedInUser,
+        notificationText:state.notificationText
+    }
+};
+
+const mapDispatchToProps = (dispatch)=> {
+    return{
+        setNotificationText:(data) => dispatch(ac_setNotification_Text(data)),
+        logout:() => dispatch(ac_logout()),
+        createBlog: (db, config, newBlog) => dispatch(ac_createBlog(db, config, newBlog))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoggedInfo);

@@ -1,58 +1,55 @@
 import React from 'react'
-import './Blog.css'
+import {connect} from 'react-redux'
+import {ac_setNotification_Text} from "../reducers/notificationTextReducer";
+import  {ac_likeBlog, ac_deleteBlog} from "../reducers/blogsReducer";
 
-const Blog = ({blog, syncer}) => {
+const Blog = (props) => {
 
-    const likeHandler = async () => {
-        const newBlog = {...blog, likes: blog.likes + 1};
+    const likeHandler = async () => props.likeBlog(props.db, props.blog);
 
-        try {
-            const updatedBlog = await syncer.blogsDB.put(blog.id, newBlog);
-            const found = syncer.blogs.value.find(i => i.id === blog.id);
-            found.likes = updatedBlog.data.likes;
-            syncer.blogs.update([...syncer.blogs.value]);
-        } catch (exception) {
-            syncer.notificationConfig('Error Liking blog');
-        }
-    };
-
-    const loggedInUser = JSON.parse(window.localStorage.getItem('token'));
-
-    const deleteHandler = async (event, id) => {
-
+    const deleteHandler = async (event) => {
         const config = {
             headers: {
-                Authorization: `bearer ${loggedInUser.webToken}`
+                Authorization: `bearer ${props.loggedInUser.webToken}`
             }
         };
 
-        try {
-            await syncer.blogsDB.del(blog.id, config);
-            const filtered = syncer.blogs.value.filter(i => i.id !== id);
-            syncer.blogs.update(filtered);
-        } catch (exception) {
-            syncer.notificationConfig('Error Deleting Blog');
-        }
-
+        props.deleteBlog(props.db, config, props.blog.id);
     };
 
     return (
-        <div className={'singleBlogContainer'}>
-            <h3 id={'blogTitle'}>{blog.title}</h3>
-            <p id={'blogBody'}>{blog.text}</p>
-            <div id={'blogFooter'}>
+        <div >
+            <h3>{props.blog.title}</h3>
+            <p>{props.blog.text}</p>
+            <div>
                 <div>
                     <span><button onClick={likeHandler}>Like</button></span>
-                    <span id={'blogLikes'}>{blog.likes} Likes </span>
+                    <span>{props.blog.likes} Likes </span>
                 </div>
                 <div>
-                    <span id={'blogAuthor'}>by {blog.author.username}</span>
-                    {loggedInUser && loggedInUser.username === blog.author.username ? <span><button
-                        onClick={(event) => deleteHandler(event, blog.id)}>Delete</button></span> : null}
+                    <span>by {props.blog.author.username}</span>
+                    {props.loggedInUser && props.loggedInUser.username === props.blog.author.username ? <span><button
+                        onClick={(event) => deleteHandler(event, props.blog.id)}>Delete</button></span> : null}
                 </div>
             </div>
         </div>
     )
 };
 
-export default Blog;
+const mapStateToProps = (state)=>{
+    return{
+        blogs:state.blogs,
+        loggedInUser:state.loggedInUser,
+        notificationText:state.notificationText
+    }
+};
+
+const mapDispatchToProps = (dispatch)=> {
+    return{
+        setNotificationText:(data) => dispatch(ac_setNotification_Text(data)),
+        likeBlog: (db, blog) => dispatch(ac_likeBlog(db,blog)),
+        deleteBlog: (db, config, id) => dispatch(ac_deleteBlog(db, config,id))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Blog);

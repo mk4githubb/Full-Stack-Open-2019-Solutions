@@ -9,10 +9,10 @@ loginRouter.post('/', async (request , response , next) =>{
     const loginData = request.body;
     const foundUser = await userTable.findOne({username : loginData.username});
 
-    const isPasswordCorrect = foundUser === null ? false : bcrypt.compare(loginData.password, foundUser.passwordHash );
+    const isPasswordCorrect = foundUser === null ? false : await bcrypt.compare(loginData.password, foundUser.passwordHash);
 
     if (!(foundUser && isPasswordCorrect)){
-        next(new Error('AuthenticationError'))
+        return next(new Error('incorrect credentials'))
     }
 
     const userForToken = {
