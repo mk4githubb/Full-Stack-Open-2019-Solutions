@@ -4,15 +4,26 @@ const bcrypt = require('bcrypt');
 
 router.get('/', async (request , response , next) => {
 
-    const foundResult = await userTable.find({}).populate('blogPosts');
-    response.status(200).json(foundResult.map(user => user.toJSON()));
+    try{
+        const foundResult = await userTable.find({}).populate('blogPosts');
+        response.status(200).json(foundResult.map(user => user.toJSON()));
+    }
+    catch (error) {
+        next(new Error(error))
+    }
 
 });
 
 router.get('/:id', async (request , response , next) => {
-    const id = request.params.id;
-    const foundResult = await userTable.findById(id).populate('blogPosts');
-    response.status(200).json(foundResult => foundResult.toJSON());
+    try{
+        const id = request.params.id;
+        const foundResult = await userTable.findById(id).populate('blogPosts');
+        response.status(200).json(foundResult.toJSON());
+    }
+    catch (error) {
+        return next(new Error(error))
+    }
+
 });
 
 router.post('/', async (request , response , next) => {
@@ -29,7 +40,7 @@ router.post('/', async (request , response , next) => {
         response.status(200).json(addedUser);
     }
     catch (exception) {
-        next(exception)
+       return next(exception)
     }
 });
 
