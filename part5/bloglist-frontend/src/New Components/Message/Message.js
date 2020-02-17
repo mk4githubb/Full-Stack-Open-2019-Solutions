@@ -1,14 +1,14 @@
 import React from 'react'
-import {GridRow, Message} from "semantic-ui-react";
+import {Grid, GridRow, Message} from "semantic-ui-react";
 import {connect} from "react-redux";
 
 const NotifMessage = (props) => {
 
-    if (props.notification){
+    if (props.notificationText){
         return(
-            <GridRow>
+            <GridRow columns={1} centered>
                 <Message>
-                    {props.notification}
+                    {props.notificationText}
                 </Message>
             </GridRow>
         )
@@ -19,7 +19,7 @@ const NotifMessage = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        notification: state.notification
+        notificationText: state.notificationText
     }
 };
 

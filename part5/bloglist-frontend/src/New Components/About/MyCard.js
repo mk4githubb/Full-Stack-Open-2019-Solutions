@@ -1,5 +1,6 @@
 import {Card, Grid} from "semantic-ui-react";
 import React from "react";
+import {Link} from "react-router-dom";
 
 
 const MyCard = () => {
@@ -14,6 +15,7 @@ const MyCard = () => {
                 color={'orange'}
                 raised
                 centered
+                as={Link}
             />
         </Grid.Column>
     )

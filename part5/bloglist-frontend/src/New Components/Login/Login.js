@@ -7,6 +7,7 @@ import useFormHook from "../../hooks/formHook";
 import {ac_setNotification_Text} from "../../reducers/notificationTextReducer";
 import {ac_login,} from "../../reducers/loggedInUserReducer";
 import {connect} from "react-redux";
+import NotifMessage from "../Message/Message";
 
 const Login = (props) => {
 
@@ -44,6 +45,9 @@ const Login = (props) => {
         <Grid>
             <Grid.Row centered>
                 <Navbar/>
+            </Grid.Row>
+            <Grid.Row columns={1} centered>
+                <NotifMessage/>
             </Grid.Row>
             <Grid.Row centered>
                 <Grid textAlign={'center'}  style={{ height: '100vh'}} verticalAlign='middle'>

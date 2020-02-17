@@ -3,6 +3,7 @@ import React from "react";
 import {ac_setNotification_Text} from "../reducers/notificationTextReducer";
 import {ac_deleteBlog, ac_likeBlog} from "../reducers/blogsReducer";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 
 const OneBlog = (props)=>{
 
@@ -19,15 +20,15 @@ const OneBlog = (props)=>{
     };
 
     return (
-        <Card raised>
-            <Card.Content>
+        <Card raised color={'teal'} as={'a'}>
+            <Card.Content textAlign={'left'}>
                 <Image
                     floated='right'
                     size='mini'
                     src={require('../resources/slash.png')}
                 />
-                <Card.Header><a href={'#'}>{props.blog.title}</a></Card.Header>
-                <Card.Meta>by {props.blog.author.username}</Card.Meta>
+                <Card.Header as={Link} to={`/blogs/${props.blog.id}`}>{props.blog.title}</Card.Header>
+                <Card.Meta as={Link} to={`/users/${props.blog.author.id}`}>by {props.blog.author.username}</Card.Meta>
                 <Card.Description>
                     {props.blog.text}
                 </Card.Description>
@@ -42,15 +43,13 @@ const OneBlog = (props)=>{
                         {props.blog.likes}
                     </Label>
                 </Button>
-
                 <DeleteButton blog={props.blog} loggedInUser={props.loggedInUser}/>
-
             </Card.Content>
         </Card>
     )
 };
 
-const DeleteButton = ({blog , loggedInUser}) => {
+export const DeleteButton = ({blog , loggedInUser}) => {
     if(blog.author.username == loggedInUser){
         return  (
             <Button animated floated={'right'}>

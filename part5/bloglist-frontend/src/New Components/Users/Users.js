@@ -10,7 +10,7 @@ const Users = () => {
             <Grid.Row centered>
                 <Navbar/>
             </Grid.Row>
-            <Grid.Row style={{ border:'2px solid red'}} columns={1} centered>
+            <Grid.Row columns={1} centered>
                 <UsersContainer/>
             </Grid.Row>
         </Grid>

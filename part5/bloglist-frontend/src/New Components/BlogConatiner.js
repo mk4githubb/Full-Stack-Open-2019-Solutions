@@ -23,11 +23,10 @@ const BlogsContainer = (props)=> {
     }
 
     return(
-        <Segment>
-            <Card.Group itemsPerRow={2}>
-                {blogs.map(i => <OneBlog key={i.id} db={props.db} blog={i}/>)}
-            </Card.Group>
-        </Segment>
+
+        <Card.Group itemsPerRow={2}>
+            {blogs.map(i => <OneBlog key={i.id} db={props.db} blog={i}/>)}
+        </Card.Group>
     )
 };
 

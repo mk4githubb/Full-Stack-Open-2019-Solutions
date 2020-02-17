@@ -4,7 +4,6 @@ import BlogsContainer from "./BlogConatiner";
 import Navbar from "./Navbar";
 import MidSection from "./MidSection";
 import NotifMessage from "./Message/Message";
-import TransitionPortal from "./LoggedInUserPage/transitionPortal";
 
 const LandingPage = (props) => {
 

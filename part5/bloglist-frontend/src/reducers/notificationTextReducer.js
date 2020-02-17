@@ -9,7 +9,7 @@ export const ac_setNotification_Text =  (text) => {
         setTimeout(() => dispatch({
             type: 'setNotificationText',
             data: null
-        }), 2000);
+        }), 5000);
     }
 };
 
